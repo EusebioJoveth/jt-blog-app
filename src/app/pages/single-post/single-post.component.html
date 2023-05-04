@@ -4,15 +4,13 @@
       <div class="card shadow-effect">
         <img src="https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Celine">
         <div class="card-body">
-          <small class="bg-light text-danger text-center">Design</small>
+          <small class="bg-light text-danger text-center">{{postData?.category.category}}</small>
           <small class="bg-light text-sucess text-center ml-2">Apresentado</small>
-          <small class="bg-light text-info text-center ml-2">Visualizações</small>
-          <small class="bg-light text-warning text-center ml-2">Última Actualização - Abril 04, 2023</small>
+          <small class="bg-light text-info text-center ml-2">{{postData?.views}}</small>
+          <small class="bg-light text-warning text-center ml-2">{{postData?.created?.toMillis() | date}}</small>
 
-          <h1 class="mt-3 mb-3">Como Iniciar no BLOG em 2023 Editando Nova Categoria</h1>
-          <p>
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Perferendis voluptatem, ea ullam quae atque qui placeat corporis veritatis, in, reiciendis odio delectus id. Eveniet praesentium adipisci soluta, perferendis quia iure!
-          </p>
+          <h1 class="mt-3 mb-3">{{postData?.title}}</h1>
+          <p [innerHTML]="postData?.content"></p>
         </div>
       </div>
        <app-comment-form></app-comment-form>

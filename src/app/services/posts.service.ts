@@ -4,7 +4,7 @@ import { Firestore, collection, collectionData,
   docSnapshots,
   getDocs,
   onSnapshot,
-  query, where, limit, orderBy } from '@angular/fire/firestore';
+  query, where, limit, orderBy, getDoc } from '@angular/fire/firestore';
 
 @Injectable({
   providedIn: 'root'
@@ -29,19 +29,6 @@ export class PostsService {
       const data =doc.data();
       const id = doc.id;
       this.allPost.push({id, ...data});
-    });
-    return this.allPost
-  }
-
-  async getPostsByFeatured1(){
-    const q = query(collection(this.firestore, "posts"), where("isFeatured", "==", true));
-    const unsubscribe = await onSnapshot(q, (querySnapshot) => {
-
-      querySnapshot.forEach((doc) => {
-        const data =doc.data();
-        const id = doc.id;
-        this.allPost.push({id, ...data});
-      });
     });
     return this.allPost
   }
@@ -71,5 +58,10 @@ export class PostsService {
       this.allPost.push({id, ...data});
     });
     return this.allPost
+  }
+
+  async getOnePost(idPost:string){
+    const documentReference =  doc(this.firestore, "posts", idPost);
+    return await getDoc(documentReference);
   }
 }
