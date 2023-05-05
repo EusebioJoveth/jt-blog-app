@@ -1,5 +1,4 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Subscription } from 'rxjs';
 import { PostsService } from 'src/app/services/posts.service';
 
 @Component({
@@ -7,9 +6,9 @@ import { PostsService } from 'src/app/services/posts.service';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
-export class HomeComponent implements OnInit, OnDestroy {
+export class HomeComponent implements OnInit {
 
-  private allSubscriptions: Subscription[] = [];
+
   dataSourcePost!: Array<any>;
   latestPostsData!: Array<any>;
 
@@ -24,8 +23,6 @@ export class HomeComponent implements OnInit, OnDestroy {
     });
   }
 
-  ngOnDestroy(): void {
-    this.allSubscriptions.forEach((subscription) => subscription.unsubscribe());
-  }
+
 
 }

@@ -4,7 +4,8 @@ import { Firestore, collection, collectionData,
   docSnapshots,
   getDocs,
   onSnapshot,
-  query, where, limit, orderBy, getDoc } from '@angular/fire/firestore';
+  query, where, limit, orderBy, getDoc, updateDoc, increment } from '@angular/fire/firestore';
+
 
 @Injectable({
   providedIn: 'root'
@@ -21,6 +22,7 @@ export class PostsService {
   }
 
   async getPostsByFeatured(){
+    this.allPost = []
     const queryRef =  query(collection(this.firestore, "posts"), where("isFeatured", "==", true), limit(4));
 
     const querySnapshot = await getDocs(queryRef);
@@ -34,6 +36,7 @@ export class PostsService {
   }
 
   async getLatestPosts(){
+    this.allPost = []
     const queryRef =  query(collection(this.firestore, "posts"), orderBy("created"));
 
     const querySnapshot = await getDocs(queryRef);
@@ -63,5 +66,15 @@ export class PostsService {
   async getOnePost(idPost:string){
     const documentReference =  doc(this.firestore, "posts", idPost);
     return await getDoc(documentReference);
+  }
+
+  async countViews(postId:string){
+    const viewsCount = {
+      views: increment (1)
+
+    }
+    const docInstance = doc(this.firestore, 'posts', postId);
+
+    return await updateDoc(docInstance, viewsCount);
   }
 }
